@@ -1,5 +1,4 @@
-openSUSE image on Scaleway [![Build Status](https://travis-ci.org/scaleway/image-opensuse.svg?branch=master)](https://travis-ci.org/scaleway/image-opensuse)
-==========================
+# openSUSE image on Scaleway [![Build Status](https://travis-ci.org/scaleway/image-opensuse.svg?branch=master)](https://travis-ci.org/scaleway/image-opensuse)
 
 Scripts to build the official openSUSE image on Scaleway
 
@@ -17,8 +16,7 @@ We use the Docker's building system and convert it at the end to a disk image th
 
 ---
 
-Install
--------
+## Install
 
 Build and write the image to /dev/nbd1 (see [documentation](https://www.scaleway.com/docs/create_an_image_with_docker))
 
@@ -28,8 +26,7 @@ Full list of commands available at: [scaleway/image-tools](https://github.com/sc
 
 ---
 
-Community discussions:
-----------------------
+## Community discussions:
 
 - [New Linux Distributions](https://community.cloud.online.net/t/official-new-linux-distributions-debian-coreos-centos-fedora-arch-linux/229)
 

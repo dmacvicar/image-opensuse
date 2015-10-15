@@ -1,10 +1,10 @@
-## -*- docker-image-name: "armbuild/ocs-distrib-opensuse:13.2" -*-
+## -*- docker-image-name: "scaleway/opensuse:latest" -*-
 FROM armbuild/opensuse-disk:13.2
 MAINTAINER Scaleway <opensource@scaleway.com> (@scaleway)
 
 
 # Environment
-ENV SCW_BASE_IMAGE armbuild/scw-distrib-opensuse:13.2
+ENV SCW_BASE_IMAGE scaleway/opensuse:latest
 
 
 # Patch rootfs for docker-based builds
