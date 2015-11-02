@@ -65,15 +65,21 @@ RUN passwd -d root
 RUN systemctl disable YaST2-Firstboot.service
 
 
-RUN systemctl mask systemd-modules-load.service \
- && systemctl mask dev-ttyS0.device \
- && systemctl mask systemd-update-utmp-runlevel \
- && systemctl mask proc-sys-fs-binfmt_misc.automount \
- && systemctl mask systemd-random-seed.service
-
-RUN systemctl set-default multi-user
-RUN systemctl disable wpa_supplicant
-RUN systemctl disable alsa-restore.service alsa-state.service alsa-store.service alsasound.service
+RUN systemctl mask                       \
+      systemd-modules-load.service       \
+      systemd-update-utmp-runlevel       \
+      proc-sys-fs-binfmt_misc.automount  \
+      systemd-random-seed.service        \
+ && systemctl enable                     \
+      dev-ttyS0.device                   \
+      serial-getty@ttyS0                 \
+ && systemctl disable                    \
+      wpa_supplicant                     \
+      alsa-restore.service               \
+      alsa-state.service                 \
+      alsa-store.service                 \
+      alsasound.service                  \
+ && systemctl set-default multi-user
 
 # Clean rootfs from image-builder
 RUN /usr/local/sbin/builder-leave
