@@ -61,10 +61,7 @@ RUN systemctl enable \
 RUN passwd -d root
 
 
-# Disable YaST2 on first boot
-RUN systemctl disable YaST2-Firstboot.service
-
-
+# Configure systemd services
 RUN systemctl mask                       \
       systemd-modules-load.service       \
       systemd-update-utmp-runlevel       \
@@ -79,6 +76,7 @@ RUN systemctl mask                       \
       alsa-state.service                 \
       alsa-store.service                 \
       alsasound.service                  \
+      YaST2-Firstboot.service            \
  && systemctl set-default multi-user
 
 # Clean rootfs from image-builder
