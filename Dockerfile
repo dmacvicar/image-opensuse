@@ -33,13 +33,6 @@ RUN zypper -n install \
     wget
 
 
-# xnbd-client
-RUN wget https://github.com/scaleway/image-opensuse/raw/master/packages/xnbd-client/RPMS/armv7hl/xnbd-client-0.3.0-1.armv7hl.rpm \
- && zypper -n install ./xnbd-client-0.3.0-1.armv7hl.rpm \
- && rm -f xnbd-client-0.3.0-1.armv7hl.rpm \
- && ldconfig
-
-
 # Locale
 RUN cd /usr/lib/locale/; ls | grep -v en_US | xargs rm -rf
 
@@ -61,19 +54,23 @@ RUN systemctl enable \
 RUN passwd -d root
 
 
-# Disable YaST2 on first boot
-RUN systemctl disable YaST2-Firstboot.service
-
-
-RUN systemctl mask systemd-modules-load.service \
- && systemctl mask dev-ttyS0.device \
- && systemctl mask systemd-update-utmp-runlevel \
- && systemctl mask proc-sys-fs-binfmt_misc.automount \
- && systemctl mask systemd-random-seed.service
-
-RUN systemctl set-default multi-user
-RUN systemctl disable wpa_supplicant
-RUN systemctl disable alsa-restore.service alsa-state.service alsa-store.service alsasound.service
+# Configure systemd services
+RUN systemctl mask                       \
+      systemd-modules-load.service       \
+      systemd-update-utmp-runlevel       \
+      proc-sys-fs-binfmt_misc.automount  \
+      systemd-random-seed.service        \
+ && systemctl enable                     \
+      dev-ttyS0.device                   \
+      serial-getty@ttyS0                 \
+ && systemctl disable                    \
+      wpa_supplicant                     \
+      alsa-restore.service               \
+      alsa-state.service                 \
+      alsa-store.service                 \
+      alsasound.service                  \
+      YaST2-Firstboot.service            \
+ && systemctl set-default multi-user
 
 # Clean rootfs from image-builder
 RUN /usr/local/sbin/builder-leave
